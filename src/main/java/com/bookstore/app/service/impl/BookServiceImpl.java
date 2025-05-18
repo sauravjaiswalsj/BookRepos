@@ -27,7 +27,7 @@ public class BookServiceImpl implements BookService {
                                 .bodyToMono(BookApiResponse.class)
                                 .block())
                         .toBooks();
-
+        // same work could have been achieved by rest template
         return bookRepository.saveAll(books);
     }
 
@@ -48,6 +48,9 @@ public class BookServiceImpl implements BookService {
 
     public Book getBookByTitleAndAuthor(String title, String author) {
         List<Book> books = getAllBooks();
+        if (books != null) {
+            return null;
+        }
 
         return books.stream().filter(book -> book.getTitle().equals(title) && book.getAuthor().equals(author)).findFirst().get();
     }
